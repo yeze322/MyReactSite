@@ -1,0 +1,12 @@
+.tabwindow {
+  padding: 10px;
+}
+
+.workrecord {
+  width: 256px;
+  padding-top: 20px;
+  padding-left: 20px;
+  margin-left: 20px;
+  margin-top: 20px;
+  background-color: rgb(240,240,240);
+}
