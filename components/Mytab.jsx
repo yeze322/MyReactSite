@@ -1,8 +1,9 @@
-import React from 'react';
-import {Tabs, Tab} from 'material-ui/Tabs';
+import React from 'react'
+import {Tabs, Tab} from 'material-ui/Tabs'
 
-import AntdHello from './AntdHello.jsx';
-import SideBar from './SideBar.jsx';
+import AntdHello from './tabs/AntdHello.jsx'
+import SideBar from './tabs/SideBar.jsx'
+import Voters from './tabs/Voters.jsx'
 
 const styles = {
   headline: {
@@ -10,41 +11,31 @@ const styles = {
     paddingTop: 16,
     marginBottom: 12,
     fontWeight: 400,
-  },
-};
+  }
+}
 
 export default class Mytab extends React.Component {
+  state = {
+    value: 'a'
+  }
 
   constructor(props) {
-    super(props);
-    this.state = {
-      value: 'a',
-    };
+    super(props)
   }
 
   handleChange = (value) => {
     this.setState({
       value: value,
-    });
-  };
+    })
+  }
 
   render() {
     return (
-      <Tabs
-        value={this.state.value}
-        onChange={this.handleChange}
-      >
-        <Tab label="Antd" value="a" >
-          <div>
-            <AntdHello />
-          </div>
-        </Tab>
-        <Tab label="Material" value="b">
-          <div>
-            <SideBar />
-          </div>
-        </Tab>
+      <Tabs value={this.state.value} onChange={this.handleChange}>
+        <Tab label="Antd" value="a" ><AntdHello /></Tab>
+        <Tab label="Material" value="b"><SideBar /></Tab>
+        <Tab label="Voters" value="c"><Voters /></Tab>
       </Tabs>
-    );
+    )
   }
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button } from 'antd';
-import WorkRecord from './WorkRecord'
+import WorkRecord from './WorkRecord.jsx'
 
 import 'antd/dist/antd.css'
 import './AntdHello.css'
