@@ -16,7 +16,7 @@ const styles = {
 
 export default class Mytab extends React.Component {
   state = {
-    value: 'voter'
+    value: 'Voters'
   }
 
   constructor(props) {
@@ -24,17 +24,23 @@ export default class Mytab extends React.Component {
   }
 
   handleChange = (value) => {
+    console.log(this.state, value)
     this.setState({
-      value: value,
+      value: value
     })
   }
-
+  _onSwitchTab = (value) => {
+    this.setState({
+      value: value
+    })
+  }
   render() {
+    let _s = this._onSwitchTab
     return (
-      <Tabs value={this.state.value} onChange={this.handleChange} style={styles} >
-        <Tab label="WorkRecord" value="WorkRecord" ><WorkRecord /></Tab>
-        <Tab label="Material" value="sidebar"><SideBar /></Tab>
-        <Tab label="Voters" value="voter"><Voters /></Tab>
+      <Tabs value={this.state.value} style={styles} >
+        <Tab label="WorkRecord" value="WorkRecord" onClick={()=>_s('WorkRecord')}><WorkRecord /></Tab>
+        <Tab label="Material" value="SideBar" onClick={()=>_s('SideBar')}><SideBar /></Tab>
+        <Tab label="Voters" value="Voters" onClick={()=>_s('Voters')}><Voters /></Tab>
       </Tabs>
     )
   }
