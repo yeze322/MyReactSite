@@ -6,7 +6,7 @@ injectTapEventPlugin();
 
 import Hello from '../components/antdsample.jsx';
 import SideBar from '../components/SideBar.jsx';
-
+import Mytab from '../components/Mytab.jsx'
 import './main.css'
 
 ReactDOM.render(<Hello />, document.getElementById('app'));
@@ -20,4 +20,11 @@ const MaterialApp = () => (
 ReactDOM.render(
   <MaterialApp />,
   document.getElementById('material')
+);
+
+ReactDOM.render(
+  <MuiThemeProvider>
+    <Mytab />
+  </MuiThemeProvider>,
+  document.getElementById('mytab')
 );
