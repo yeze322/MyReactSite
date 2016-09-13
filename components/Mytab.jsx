@@ -29,18 +29,17 @@ export default class Mytab extends React.Component {
       value: value
     })
   }
-  _onSwitchTab = (value) => {
+  _onSwitchTab = () => {
     this.setState({
-      value: value
+      value: this.props.value
     })
   }
   render() {
-    let _s = this._onSwitchTab
     return (
       <Tabs value={this.state.value} style={styles} >
-        <Tab label="WorkRecord" value="WorkRecord" onClick={()=>_s('WorkRecord')}><WorkRecord /></Tab>
-        <Tab label="Material" value="SideBar" onClick={()=>_s('SideBar')}><SideBar /></Tab>
-        <Tab label="Voters" value="Voters" onClick={()=>_s('Voters')}><Voters /></Tab>
+        <Tab label="WorkRecord" value="WorkRecord" onClick={this._onSwitchTab}><WorkRecord /></Tab>
+        <Tab label="Material" value="SideBar" onClick={this._onSwitchTab}><SideBar /></Tab>
+        <Tab label="Voters" value="Voters" onClick={this._onSwitchTab}><Voters /></Tab>
       </Tabs>
     )
   }
