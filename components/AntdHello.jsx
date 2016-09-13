@@ -3,7 +3,7 @@ import { Button } from 'antd';
 import 'antd/dist/antd.css'
 import TL from './tl'
 
-export default class Hello extends React.Component {
+export default class AntdHello extends React.Component {
   render() {
     return (
       <div>
