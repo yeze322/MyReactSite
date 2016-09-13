@@ -16,7 +16,7 @@ const styles = {
 
 export default class Mytab extends React.Component {
   state = {
-    value: 'a'
+    value: 'voter'
   }
 
   constructor(props) {
@@ -32,9 +32,9 @@ export default class Mytab extends React.Component {
   render() {
     return (
       <Tabs value={this.state.value} onChange={this.handleChange}>
-        <Tab label="Antd" value="a" ><AntdHello /></Tab>
-        <Tab label="Material" value="b"><SideBar /></Tab>
-        <Tab label="Voters" value="c"><Voters /></Tab>
+        <Tab label="Antd" value="timeline" ><AntdHello /></Tab>
+        <Tab label="Material" value="sidebar"><SideBar /></Tab>
+        <Tab label="Voters" value="voter"><Voters /></Tab>
       </Tabs>
     )
   }
