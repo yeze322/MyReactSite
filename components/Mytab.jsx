@@ -1,7 +1,7 @@
 import React from 'react'
 import {Tabs, Tab} from 'material-ui/Tabs'
 
-import AntdHello from './tabs/AntdHello.jsx'
+import WorkRecord from './tabs/WorkRecord.jsx'
 import SideBar from './tabs/SideBar.jsx'
 import Voters from './tabs/Voters.jsx'
 
@@ -31,8 +31,8 @@ export default class Mytab extends React.Component {
 
   render() {
     return (
-      <Tabs value={this.state.value} onChange={this.handleChange}>
-        <Tab label="Antd" value="timeline" ><AntdHello /></Tab>
+      <Tabs value={this.state.value} onChange={this.handleChange} style={styles} >
+        <Tab label="WorkRecord" value="WorkRecord" ><WorkRecord /></Tab>
         <Tab label="Material" value="sidebar"><SideBar /></Tab>
         <Tab label="Voters" value="voter"><Voters /></Tab>
       </Tabs>
