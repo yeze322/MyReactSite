@@ -39,7 +39,7 @@ export default class Mytab extends React.Component {
       <Tabs value={this.state.value} style={styles} >
         <Tab label="WorkRecord" value="WorkRecord" onClick={this._onSwitchTab}><WorkRecord /></Tab>
         <Tab label="Material" value="SideBar" onClick={this._onSwitchTab}><SideBar /></Tab>
-        <Tab label="Voters" value="Voters" onClick={this._onSwitchTab}><Voters /></Tab>
+        <Tab label="Voters" value="VoterDemo" onClick={this._onSwitchTab}><Voters /></Tab>
       </Tabs>
     )
   }
