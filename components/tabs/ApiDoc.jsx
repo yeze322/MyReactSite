@@ -1,19 +1,12 @@
 import React from 'react'
-import { RaisedButton } from 'material-ui'
+import { RaisedButton, TextField } from 'material-ui'
 
 export default class ApiDoc extends React.Component {
 
   state = {
-    json: ''
-  }
-
-  _fetchGit = () => {
-    var req = new XMLHttpRequest()
-    req.open('GET', 'https://api.github.com/users/yeze322/repos', false)
-    req.send(null)
-    this.setState({
-      json: req.responseText
-    })
+    json: '',
+    userName: 'yeze322',
+    repoName: 'MyNodeApi'
   }
 
   _fetchGitAsync = () => {
@@ -25,17 +18,54 @@ export default class ApiDoc extends React.Component {
         })
       }
     }
-    req.open('GET', 'https://api.github.com/users/yeze322/repos')
+    req.open('GET', `https://api.github.com/repos/${this.state.userName}/${this.state.repoName}`)
     req.send(null)
   }
 
+  _onInputUser = (event) => {
+    this.setState({
+      userName: event.target.value
+    });
+  }
+
+  _onInputRepo = (event) => {
+    this.setState({
+      repoName: event.target.value
+    })
+  }
+
+  _generateGitLink = () => {
+    return `https://github.com/${this.state.userName}/${this.state.repoName}`
+  }
+
   render() {
+    let link = this._generateGitLink()
     return (
       <div>
-        <RaisedButton label="Fetch Github" primary={true} onClick={this._fetchGitAsync} />
-        <h2>Github Link</h2>
-        <p>https://github.com/yeze322/MyNodeApi.git</p>
-        {this.state.json}
+        <div>
+          <RaisedButton label="Fetch Github" primary={true} onClick={this._fetchGitAsync} />
+          <br />
+          <TextField
+            hintText="Github User Name"
+            floatingLabelText="UserName"
+            value={this.state.userName}
+            onChange={this._onInputUser}
+          />
+          <br />
+          <TextField
+            hintText="Github Repo Name"
+            floatingLabelText="RepoName"
+            value={this.state.repoName}
+            onChange={this._onInputRepo}
+          />
+          <br />
+          <br />
+          <h1>Visit</h1>
+          <a href={link} target='_blank'>{link}</a>
+        </div>
+        <div>
+          {this.state.json}      
+        </div>
       </div>
     )
   }
