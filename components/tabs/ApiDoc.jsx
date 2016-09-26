@@ -2,6 +2,14 @@ import React from 'react'
 import { LinearProgress, FlatButton, TextField } from 'material-ui'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 
+import {List, ListItem} from 'material-ui/List'
+import ActionInfo from 'material-ui/svg-icons/action/info';
+import ActionAssignment from 'material-ui/svg-icons/action/assignment';
+import EditorInsertChart from 'material-ui/svg-icons/editor/insert-chart';
+import Avatar from 'material-ui/Avatar';
+import {blue500, yellow600} from 'material-ui/styles/colors';
+
+
 export default class ApiDoc extends React.Component {
 
   state = {
@@ -58,7 +66,7 @@ export default class ApiDoc extends React.Component {
 
   render() {
     let link = this._generateGitLink()
-    let repoData = JSON.parse(this.state.userJson).map((obj)=>{
+    let userRepos = JSON.parse(this.state.userJson).map((obj)=>{
       return {
         id: obj.id,
         name: obj.name,
@@ -66,18 +74,17 @@ export default class ApiDoc extends React.Component {
         url: obj.clone_url
       }
     })
+    let repoData = JSON.parse(this.state.repoJson)
     return (
       <div>
         <div>
-          <FlatButton label="Fetch Repo" primary={true} onClick={this._fetchRepoAsync} />
-          <FlatButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
-          <br />
           <TextField
             hintText="Github User Name"
             floatingLabelText="UserName"
             value={this.state.userName}
             onChange={this._onInputUser}
           />
+          <FlatButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
           <br />
           <TextField
             hintText="Github Repo Name"
@@ -85,16 +92,35 @@ export default class ApiDoc extends React.Component {
             value={this.state.repoName}
             onChange={this._onInputRepo}
           />
+          <FlatButton label="Fetch Repo" primary={true} onClick={this._fetchRepoAsync} />
           <br />
           <br />
           <h1>Visit</h1>
           <a href={link} target='_blank'>{link}</a>
         </div>
         <div>
-          {this.state.repoJson}
+        { this.state.repoJson !== '[]' &&
+          <List>
+            <ListItem
+              leftAvatar={<Avatar icon={<ActionAssignment />} backgroundColor={blue500} />}
+              rightIcon={<ActionInfo />}
+              primaryText="Created Time"
+              secondaryText={repoData.created_at}
+            />
+            <ListItem
+              leftAvatar={<Avatar icon={<EditorInsertChart />} backgroundColor={yellow600} />}
+              rightIcon={<ActionInfo />}
+              primaryText="Last Modified"
+              secondaryText={repoData.updated_at}
+            />
+          </List>
+        }
         </div>
-        <LinearProgress mode="determinate" value={100}/>
+        { this.state.userJson !== '[]' && this.state.repoJson !== '[]' &&
+          <LinearProgress mode="determinate" value={100}/>
+        }
         <div>
+        { this.state.userJson !== '[]' &&
           <Table selectable={false}>
             <TableHeader displaySelectAll={false}>
               <TableRow>
@@ -105,7 +131,7 @@ export default class ApiDoc extends React.Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {repoData.map( (row, index) => (
+              {userRepos.map( (row, index) => (
                   <TableRow key={index}>
                     <TableRowColumn>{row.id}</TableRowColumn>
                     <TableRowColumn>{row.name}</TableRowColumn>
@@ -115,6 +141,7 @@ export default class ApiDoc extends React.Component {
                   ))}
             </TableBody>
           </Table>
+        }
         </div>
       </div>
     )
