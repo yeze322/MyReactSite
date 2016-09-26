@@ -17,7 +17,7 @@ const styles = {
 
 export default class Mytab extends React.Component {
   state = {
-    value: 'Voters'
+    value: 'ApiDoc'
   }
 
   constructor(props) {
