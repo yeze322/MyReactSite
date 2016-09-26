@@ -1,24 +1,42 @@
 import React from 'react'
-import { RaisedButton, TextField } from 'material-ui'
+import { LinearProgress, FlatButton, TextField } from 'material-ui'
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 
 export default class ApiDoc extends React.Component {
 
   state = {
-    json: '',
+    userJson: '[]',
+    repoJson: '[]',
     userName: 'yeze322',
-    repoName: 'MyNodeApi'
+    repoName: 'MyNodeApi',
+    currentDataSoure: ''
   }
 
-  _fetchGitAsync = () => {
+  _fetchRepoAsync = () => {
     var req = new XMLHttpRequest()
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
         this.setState({
-          json: req.responseText
+          repoJson: req.responseText,
+          currentDataSoure: 'repo'
         })
       }
     }
     req.open('GET', `https://api.github.com/repos/${this.state.userName}/${this.state.repoName}`)
+    req.send(null)
+  }
+
+  _fetchUserAsync = () => {
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = () => {
+      if(req.readyState == 4 && req.status == 200){
+        this.setState({
+          userJson: req.responseText,
+          currentDataSoure: 'user'
+        })
+      }
+    }
+    req.open('GET', `https://api.github.com/users/${this.state.userName}/repos`)
     req.send(null)
   }
 
@@ -40,10 +58,19 @@ export default class ApiDoc extends React.Component {
 
   render() {
     let link = this._generateGitLink()
+    let repoData = JSON.parse(this.state.userJson).map((obj)=>{
+      return {
+        id: obj.id,
+        name: obj.name,
+        full_name: obj.full_name,
+        url: obj.clone_url
+      }
+    })
     return (
       <div>
         <div>
-          <RaisedButton label="Fetch Github" primary={true} onClick={this._fetchGitAsync} />
+          <FlatButton label="Fetch Repo" primary={true} onClick={this._fetchRepoAsync} />
+          <FlatButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
           <br />
           <TextField
             hintText="Github User Name"
@@ -64,7 +91,30 @@ export default class ApiDoc extends React.Component {
           <a href={link} target='_blank'>{link}</a>
         </div>
         <div>
-          {this.state.json}      
+          {this.state.repoJson}
+        </div>
+        <LinearProgress mode="determinate" value={100}/>
+        <div>
+          <Table selectable={false}>
+            <TableHeader displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn>ID</TableHeaderColumn>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Full Name</TableHeaderColumn>
+                <TableHeaderColumn>Url</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              {repoData.map( (row, index) => (
+                  <TableRow key={index}>
+                    <TableRowColumn>{row.id}</TableRowColumn>
+                    <TableRowColumn>{row.name}</TableRowColumn>
+                    <TableRowColumn>{row.full_name}</TableRowColumn>
+                    <TableRowColumn><a href={row.url} target='_about'>Github</a></TableRowColumn>
+                  </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
         </div>
       </div>
     )
