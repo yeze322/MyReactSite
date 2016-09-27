@@ -1,5 +1,5 @@
 import React from 'react'
-import { LinearProgress, FlatButton, TextField } from 'material-ui'
+import { LinearProgress, RaisedButton, TextField } from 'material-ui'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
 
 import {List, ListItem} from 'material-ui/List'
@@ -84,7 +84,7 @@ export default class ApiDoc extends React.Component {
             value={this.state.userName}
             onChange={this._onInputUser}
           />
-          <FlatButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
+          <RaisedButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
           <br />
           <TextField
             hintText="Github Repo Name"
@@ -92,7 +92,7 @@ export default class ApiDoc extends React.Component {
             value={this.state.repoName}
             onChange={this._onInputRepo}
           />
-          <FlatButton label="Fetch Repo" primary={true} onClick={this._fetchRepoAsync} />
+          <RaisedButton label="Fetch Repo" primary={true} onClick={this._fetchRepoAsync} />
           <br />
           <br />
           <h1>Visit</h1>

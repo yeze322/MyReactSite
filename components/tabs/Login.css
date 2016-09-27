@@ -1,3 +1,12 @@
+/* Main from */
+.loginform {
+    width: 500px;
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    transform: translate(-50%, 0%);
+}
+
 /* Bordered form */
 form {
     border: 3px solid #f1f1f1;
@@ -14,7 +23,7 @@ input[type=text], input[type=password] {
 }
 
 /* Set a style for all buttons */
-button {
+.container button {
     background-color: #4CAF50;
     color: white;
     padding: 14px 20px;
@@ -25,7 +34,7 @@ button {
 }
 
 /* Extra style for the cancel button (red) */
-.cancelbtn {
+button.cancelbtn {
     width: auto;
     padding: 10px 18px;
     background-color: #f44336;
@@ -39,11 +48,10 @@ button {
 
 /* Avatar image */
 img.avatar {
-    width: 40%;
-    border-radius: 50%;
+    width: 100px;
+    border-radius: 25%;
 }
 
-/* Add padding to containers */
 .container {
     padding: 16px;
 }
