@@ -5,6 +5,7 @@ import WorkRecord from './tabs/WorkRecord.jsx'
 import SideBar from './tabs/SideBar.jsx'
 import Voters from './tabs/Voters.jsx'
 import ApiDoc from './tabs/ApiDoc.jsx'
+import Login from './tabs/Login.jsx'
 
 const styles = {
   headline: {
@@ -42,6 +43,7 @@ export default class Mytab extends React.Component {
         <Tab label="Material" value="SideBar" onClick={this._onSwitchTab}><SideBar /></Tab>
         <Tab label="VoterDemo" value="Voters" onClick={this._onSwitchTab}><Voters /></Tab>
         <Tab label="API" value="ApiDoc" onClick={this._onSwitchTab}><ApiDoc /></Tab>
+        <Tab label="Login" value="Login" onClick={this._onSwitchTab}><Login /></Tab>
       </Tabs>
     )
   }
