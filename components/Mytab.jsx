@@ -1,4 +1,5 @@
 import React from 'react'
+import { browserHistory } from 'react-router'
 import {Tabs, Tab} from 'material-ui/Tabs'
 
 import WorkRecord from './tabs/WorkRecord.jsx'
@@ -16,9 +17,17 @@ const styles = {
   }
 }
 
+const tabNameMap = {
+  WorkRecord : "WorkRecord",
+  Material : "Material",
+  Voters : "Voters",
+  ApiDoc : "ApiDoc",
+  Login : "Login"
+}
+
 export default class Mytab extends React.Component {
   state = {
-    value: 'ApiDoc'
+    currentTab: 'ApiDoc'
   }
 
   constructor(props) {
@@ -26,25 +35,25 @@ export default class Mytab extends React.Component {
   }
 
   handleChange = (value) => {
-    console.log(this.state, value)
     this.setState({
-      value: value
+      currentTab: value
     })
+    browserHistory.push(`/${value}`)
   }
-  _onSwitchTab = () => {
-    this.setState({
-      value: this.props.value
-    })
-  }
+
   render() {
+    let tabName = this.props.params.tabName
     return (
-      <Tabs value={this.state.value} style={styles} >
-        <Tab label="WorkRecord" value="WorkRecord" onClick={this._onSwitchTab}><WorkRecord /></Tab>
-        <Tab label="Material" value="SideBar" onClick={this._onSwitchTab}><SideBar /></Tab>
-        <Tab label="VoterDemo" value="Voters" onClick={this._onSwitchTab}><Voters /></Tab>
-        <Tab label="API" value="ApiDoc" onClick={this._onSwitchTab}><ApiDoc /></Tab>
-        <Tab label="Login" value="Login" onClick={this._onSwitchTab}><Login /></Tab>
-      </Tabs>
+      <div>
+        <Tabs value={tabNameMap[tabName] === undefined ? this.state.currentTab : tabName} style={styles} onChange={this.handleChange}>
+          <Tab label="WorkRecord" value={tabNameMap.WorkRecord}><WorkRecord /></Tab>
+          <Tab label="Material" value={tabNameMap.Material}><SideBar /></Tab>
+          <Tab label="VoterDemo" value={tabNameMap.Voters}><Voters /></Tab>
+          <Tab label="API" value={tabNameMap.ApiDoc}><ApiDoc /></Tab>
+          <Tab label="Login" value={tabNameMap.Login}><Login /></Tab>
+        </Tabs>
+        {this.props.children}
+      </div>
     )
   }
 }

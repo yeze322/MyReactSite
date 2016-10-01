@@ -7,10 +7,16 @@ injectTapEventPlugin();
 
 import Mytab from '../components/Mytab.jsx'
 import './main.css'
+import { Router, Route, browserHistory, IndexRoute } from 'react-router'
+import Login from '../components/tabs/Login.jsx'
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <Mytab />
+    <Router history={browserHistory}>
+      <Route path='/' component={Mytab} />
+      <Route path='/hidden' component={Login} />
+      <Route path='/:tabName' component={Mytab} />
+    </Router>
   </MuiThemeProvider>,
   document.getElementById('mytab')
 );

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router'
 import './Login.css';
 import myAvater from './avatar.jpg'
 
@@ -19,7 +20,6 @@ export default class Login extends React.Component {
             <input type="password" placeholder="Enter Password" name="psw" required />
                 
             <button type="submit">Login</button>
-            <input type="checkbox" checked="checked" /> Remember me
           </div>
 
           <div className="container" style={{background: '#f1f1f1'}}>
@@ -27,6 +27,7 @@ export default class Login extends React.Component {
             <span className="psw">Forgot <a>password?</a></span>
           </div>
         </form>
+        <Link to='/'>Home~</Link>
       </div>
     );
   }
