@@ -8,7 +8,7 @@ class LoginForm extends React.Component {
   state = {
     password: '',
     username: '',
-    authpassed: 'false'
+    authpassed: false
   }
 
   formHandler = (fieldName) => {
@@ -18,14 +18,26 @@ class LoginForm extends React.Component {
       })
     }
   }
-
   loginBtnHandler = () => {
-    let authPassed = this.state.username === 'yeze' && this.state.password === 'yeze'
+    let checked = this.state.username === 'yeze' && this.state.password === 'yeze'
     this.setState({
       username: '',
       password: '',
-      authpassed: authPassed
+      authpassed: checked
     })
+  }
+  ajaxFetcher = () => {
+    let src = 'http://yeze.eastasia.cloudapp.azure.com:8080/name'
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = () => {
+      if(req.readyState == 4 && req.status == 200){
+        this.setState({
+          authpassed: req.responseText === this.state.username
+        })
+      }
+    }
+    req.open('GET', src)
+    req.send(null)
   }
   render () {
     return (
@@ -35,10 +47,11 @@ class LoginForm extends React.Component {
         </div>
 
         <div className="container">
-          <TextField value={this.state.username} hintText="UserName Field" floatingLabelText="UserName" fullWidth={true} onChange={this.formHandler("username")} />
-          <TextField value={this.state.password} type="password" hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
-          {this.state.authpassed ? 'true' : 'false'}
-          <button onClick={this.loginBtnHandler}>Login</button>
+          <TextField id="username" value={this.state.username} hintText="UserName Field" floatingLabelText="UserName" fullWidth={true} onChange={this.formHandler("username")} />
+          <TextField id="password" value={this.state.password} type="password" hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
+          {this.state.authpassed ? 'Authentication Success!' : 'Try Again...'}
+          <button type="submit" onClick={this.loginBtnHandler}>Login</button>
+          <button onClick={this.ajaxFetcher}>AJAX Fetch</button>
         </div>
         <Link to='/'>Home~</Link>
       </div>
