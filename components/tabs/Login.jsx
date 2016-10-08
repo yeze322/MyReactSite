@@ -18,7 +18,8 @@ class LoginForm extends React.Component {
       })
     }
   }
-  loginBtnHandler = () => {
+  loginBtnHandler = (evt) => {
+    evt.preventDefault()
     let checked = this.state.username === 'yeze' && this.state.password === 'yeze'
     this.setState({
       username: '',
@@ -31,6 +32,7 @@ class LoginForm extends React.Component {
     let req = new XMLHttpRequest()
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
+        console.log(req.responseText)
         this.setState({
           authpassed: req.responseText === this.state.username
         })
@@ -47,10 +49,12 @@ class LoginForm extends React.Component {
         </div>
 
         <div className="container">
-          <TextField id="username" value={this.state.username} hintText="UserName Field" floatingLabelText="UserName" fullWidth={true} onChange={this.formHandler("username")} />
-          <TextField id="password" value={this.state.password} type="password" hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
-          {this.state.authpassed ? 'Authentication Success!' : 'Try Again...'}
-          <button type="submit" onClick={this.loginBtnHandler}>Login</button>
+          <form onSubmit={this.loginBtnHandler}>
+            <TextField type="username" id="username" value={this.state.username} hintText="UserName Field" floatingLabelText="UserName" fullWidth={true} onChange={this.formHandler("username")} />
+            <TextField type="password" id="password" value={this.state.password} type="password" hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
+            {this.state.authpassed ? 'Authentication Success!' : 'Try Again...'}
+            <button type="submit">Login</button>
+          </form>
           <button onClick={this.ajaxFetcher}>AJAX Fetch</button>
         </div>
         <Link to='/'>Home~</Link>
