@@ -29,12 +29,12 @@ class LoginForm extends React.Component {
     }
   }
   ajaxFetcher = () => {
-    let src = 'http://yeze.eastasia.cloudapp.azure.com:8080/name'
+    let src = `http://yeze.eastasia.cloudapp.azure.com:8080/login?name=${this.state.username}&pswd=${this.state.password}`
     let req = new XMLHttpRequest()
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
         console.log(req.responseText)
-        if(req.responseText === this.state.username){
+        if(req.responseText === "true"){
           this.props.onPassAuth()
         }
       }
