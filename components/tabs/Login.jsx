@@ -8,7 +8,6 @@ class LoginForm extends React.Component {
   state = {
     password: '',
     username: '',
-    authpassed: false
   }
 
   formHandler = (fieldName) => {
@@ -24,8 +23,10 @@ class LoginForm extends React.Component {
     this.setState({
       username: '',
       password: '',
-      authpassed: checked
     })
+    if(checked){
+      this.props.onPassAuth()
+    }
   }
   ajaxFetcher = () => {
     let src = 'http://yeze.eastasia.cloudapp.azure.com:8080/name'
@@ -33,9 +34,9 @@ class LoginForm extends React.Component {
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
         console.log(req.responseText)
-        this.setState({
-          authpassed: req.responseText === this.state.username
-        })
+        if(req.responseText === this.state.username){
+          this.props.onPassAuth()
+        }
       }
     }
     req.open('GET', src)
@@ -51,8 +52,8 @@ class LoginForm extends React.Component {
         <div className="container">
           <form onSubmit={this.loginBtnHandler}>
             <TextField type="username" id="username" value={this.state.username} hintText="UserName Field" floatingLabelText="UserName" fullWidth={true} onChange={this.formHandler("username")} />
-            <TextField type="password" id="password" value={this.state.password} type="password" hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
-            {this.state.authpassed ? 'Authentication Success!' : 'Try Again...'}
+            <TextField type="password" id="password" value={this.state.password} hintText="Password Field" floatingLabelText="Password" fullWidth={true} onChange={this.formHandler("password")} />
+            {this.props.authpassed ? 'Authentication Success!' : 'Try Again...'}
             <button type="submit">Login</button>
           </form>
           <button onClick={this.ajaxFetcher}>AJAX Fetch</button>
@@ -64,7 +65,25 @@ class LoginForm extends React.Component {
 }
 
 export default class Login extends React.Component {
+  state = {
+    authpassed: false
+  }
+  onPassAuth = () => {
+    this.setState({
+      authpassed: true
+    })
+  }
+  onResetAuth = () => {
+    this.setState({
+      authpassed: false
+    })
+  }
   render() {
-    return <LoginForm />
+    const { authpassed } = this.state
+    if(!authpassed){
+      return <LoginForm authpassed={authpassed} onPassAuth={this.onPassAuth} />
+    }else{
+      return <div onClick={this.onResetAuth}>Hello world!</div>
+    }
   }
 }
