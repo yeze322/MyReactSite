@@ -4,7 +4,7 @@ var path = require('path');
 var config = {
   entry: [
       'webpack/hot/dev-server',
-      'webpack-dev-server/client?http://localhost:3222',
+      'webpack-dev-server/client?http://0.0.0.0:3222',
       path.resolve(__dirname, 'app/main.js')
   ],
   output: {
