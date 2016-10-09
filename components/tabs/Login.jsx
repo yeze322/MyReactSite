@@ -40,6 +40,7 @@ class LoginForm extends React.Component {
       }
     }
     req.open('GET', src)
+    req.withCredentials = true
     req.send(null)
   }
   render () {
