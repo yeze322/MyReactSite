@@ -3,7 +3,7 @@ const tabNameMap = {
   Material : "/Material",
   Voters : "/Voters",
   ApiDoc : "/ApiDoc",
-  Login : "/Login"
+  WaitingForYou : "/Wating4u"
 }
 
 export default tabNameMap

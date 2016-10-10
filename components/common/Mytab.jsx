@@ -32,11 +32,9 @@ export default class Mytab extends React.Component {
     return (
       <div>
         <Tabs value={this.props.location.pathname} style={styles} onChange={this.handleChange}>
-          <Tab label="WorkRecord" value={TabUrlMap.WorkRecord} />
-          <Tab label="Material" value={TabUrlMap.Material} />
           <Tab label="VoterDemo" value={TabUrlMap.Voters} />
+          <Tab label="Waiting For You" value={TabUrlMap.WaitingForYou} />
           <Tab label="API" value={TabUrlMap.ApiDoc} />
-          <Tab label="Login" value={TabUrlMap.Login} />
         </Tabs>
         {this.props.children}
       </div>
