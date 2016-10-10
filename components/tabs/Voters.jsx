@@ -47,8 +47,13 @@ export default class Voters extends React.Component {
     })
   }
   _reportCookie = () => {
-    document.cookie += "yeze"
     console.log(document.cookie)
+  }
+  _supervisor = () => {
+    var req = new XMLHttpRequest()
+    req.open('GET', 'http://localhost:8080/supervisor')
+    req.withCredentials = true
+    req.send(null)
   }
   render () {
     const { checked, toggleArray: tA } = this.state
@@ -58,7 +63,7 @@ export default class Voters extends React.Component {
         <div className='button-window'>
           <RaisedButton label='Primary' primary={checked} style={style} onClick={this._reportCookie} />
           <RaisedButton label='Secondary' secondary={checked} style={style} />
-          <FlatButton label='Secondary' />
+          <FlatButton label='Secondary' onClick={this._supervisor} />
           <FloatingActionButton mini={true} secondary={checked}>
             <ContentAdd />
           </FloatingActionButton>
