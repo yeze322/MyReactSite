@@ -1,9 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router'
-import { TextField } from 'material-ui'
 import LoginForm from './Waiting/LoginForm.jsx'
+import MainPage from './Waiting/MainPage.jsx'
 
-//var host = "localhost"
+//var apiHost = "localhost:8080"
 var apiHost = "yeze.eastasia.cloudapp.azure.com/api"
 
 export default class Login extends React.Component {
@@ -72,7 +71,7 @@ export default class Login extends React.Component {
     if(!authpassed){
       return <LoginForm authpassed={authpassed} onPassAuth={this.onPassAuth} onLogin={this.onLogin} />
     }else{
-      return <div onClick={this.onLogout}>Log Out</div>
+      return <MainPage onLogout={this.onLogout} />
     }
   }
 }
