@@ -4,6 +4,9 @@ import './Login.css';
 import myAvater from './avatar.jpg'
 import { TextField } from 'material-ui'
 
+//var host = "localhost"
+var host = "yeze.eastasia.cloudapp.azure.com"
+
 class LoginForm extends React.Component {
   state = {
     password: '',
@@ -28,12 +31,12 @@ class LoginForm extends React.Component {
       this.props.onPassAuth()
     }
   }
-  ajaxFetcher = () => {
-    let src = `http://yeze.eastasia.cloudapp.azure.com:8080/login?name=${this.state.username}&pswd=${this.state.password}`
+  onLogin = () => {
+    let src = `http://${host}:8080/login?name=${this.state.username}&pswd=${this.state.password}`
     let req = new XMLHttpRequest()
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
-        console.log(req.responseText)
+        console.log('Login(): ', req.responseText)
         if(req.responseText === "true"){
           this.props.onPassAuth()
         }
@@ -57,7 +60,7 @@ class LoginForm extends React.Component {
             {this.props.authpassed ? 'Authentication Success!' : 'Try Again...'}
             <button type="submit">Login</button>
           </form>
-          <button onClick={this.ajaxFetcher}>AJAX Fetch</button>
+          <button onClick={this.onLogin}>AJAX Fetch</button>
         </div>
         <Link to='/'>Home~</Link>
       </div>
@@ -69,6 +72,9 @@ export default class Login extends React.Component {
   state = {
     authpassed: false
   }
+  componentDidMount = () => {
+    this.checkCookie()
+  }
   onPassAuth = () => {
     this.setState({
       authpassed: true
@@ -79,12 +85,39 @@ export default class Login extends React.Component {
       authpassed: false
     })
   }
+  checkCookie = () => {
+    // make synchronous request
+    let src = `http://${host}:8080/login`
+    let req = new XMLHttpRequest()
+    req.open('GET', src, false)
+    req.withCredentials = true
+    req.send(null)
+    if(req.readyState == 4 && req.status == 200){
+      if(req.responseText === "true"){
+        console.log('Cookies loaded')
+        this.onPassAuth()
+      }
+    }
+  }
+  onLogout = () => {
+    let src = `http://${host}:8080/logout?name=${this.state.username}&pswd=${this.state.password}`
+    let req = new XMLHttpRequest()
+    req.onreadystatechange = () => {
+      if(req.readyState == 4 && req.status == 200){
+        console.log('logout')
+        this.onResetAuth()
+      }
+    }
+    req.open('POST', src)
+    req.withCredentials = true
+    req.send(null)
+  }
   render() {
     const { authpassed } = this.state
     if(!authpassed){
       return <LoginForm authpassed={authpassed} onPassAuth={this.onPassAuth} />
     }else{
-      return <div onClick={this.onResetAuth}>Hello world!</div>
+      return <div onClick={this.onLogout}>Log Out</div>
     }
   }
 }

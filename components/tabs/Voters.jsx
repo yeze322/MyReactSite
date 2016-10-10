@@ -46,14 +46,17 @@ export default class Voters extends React.Component {
       toggleArray: this.state.toggleArray.map((val, index) => index === i ? !val : val)
     })
   }
-
+  _reportCookie = () => {
+    document.cookie += "yeze"
+    console.log(document.cookie)
+  }
   render () {
     const { checked, toggleArray: tA } = this.state
     let rev = this._revertArrayState
     return (
       <div>
         <div className='button-window'>
-          <RaisedButton label='Primary' primary={checked} style={style} />
+          <RaisedButton label='Primary' primary={checked} style={style} onClick={this._reportCookie} />
           <RaisedButton label='Secondary' secondary={checked} style={style} />
           <FlatButton label='Secondary' />
           <FloatingActionButton mini={true} secondary={checked}>
