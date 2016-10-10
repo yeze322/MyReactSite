@@ -4,7 +4,7 @@ import { TextField } from 'material-ui'
 import LoginForm from './Waiting/LoginForm.jsx'
 
 //var host = "localhost"
-var host = "yeze.eastasia.cloudapp.azure.com"
+var apiHost = "yeze.eastasia.cloudapp.azure.com/api"
 
 export default class Login extends React.Component {
   state = {
@@ -25,7 +25,7 @@ export default class Login extends React.Component {
   }
   checkCookie = () => {
     // make synchronous request
-    let src = `http://${host}:8080/login`
+    let src = `http://${apiHost}/login`
     let req = new XMLHttpRequest()
     req.open('GET', src, false)
     req.withCredentials = true
@@ -39,7 +39,7 @@ export default class Login extends React.Component {
   }
   onLogin = (username, password) => {
     return () => {
-      let src = `http://${host}:8080/login?name=${username}&pswd=${password}`
+      let src = `http://${apiHost}/login?name=${username}&pswd=${password}`
       let req = new XMLHttpRequest()
       req.onreadystatechange = () => {
         if(req.readyState == 4 && req.status == 200){
@@ -55,7 +55,7 @@ export default class Login extends React.Component {
     }
   }
   onLogout = () => {
-    let src = `http://${host}:8080/logout?name=${this.state.username}&pswd=${this.state.password}`
+    let src = `http://${apiHost}/logout?name=${this.state.username}&pswd=${this.state.password}`
     let req = new XMLHttpRequest()
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
