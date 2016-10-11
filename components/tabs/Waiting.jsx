@@ -3,7 +3,7 @@ import LoginForm from './Waiting/LoginForm.jsx'
 import MainPage from './Waiting/MainPage.jsx'
 
 //var apiHost = "localhost:8080"
-var apiHost = "yeze.eastasia.cloudapp.azure.com/api"
+var apiHost = "yeze.eastasia.cloudapp.azure.com:8080"
 
 export default class Login extends React.Component {
   state = {
