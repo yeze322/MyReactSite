@@ -1,12 +1,13 @@
 import React from 'react'
-import { RaisedButton, Toggle, TextField } from 'material-ui'
+import { RaisedButton, Toggle, TextField, Dialog } from 'material-ui'
 import { orange500 } from 'material-ui/styles/colors'
 import { apiHost } from '../../common'
 import './MainPage.css'
 
 export default class MainPage extends React.Component {
   state = {
-    meal : false
+    meal : false,
+    dialogActived: false
   }
   _onCloseEvent = (eventName) => {
     const { revertEvent } = this.props
@@ -29,6 +30,10 @@ export default class MainPage extends React.Component {
     if(req.readyState == 4){
       switch (req.status) {
         case 200: // match success
+          revertEvent()
+          this.setState({
+            dialogActived: true
+          })
           console.log('Match Success')
           return
         case 201:
@@ -48,7 +53,20 @@ export default class MainPage extends React.Component {
       this._onOpenEvent('hello')
     }
   }
+  _onDialogClose = () => {
+    this.setState({
+      dialogActived: false
+    })
+    this.props.revertEvent()
+  }
   render () {
+    const actions = [
+      <RaisedButton
+        label="OK"
+        secondary={true}
+        onTouchTap={this._onDialogClose}
+      />
+    ];
     return (
       <div className="MainPage">
         <Toggle
@@ -62,6 +80,15 @@ export default class MainPage extends React.Component {
         {this.state.meal &&(
           <TextField hintText="Hello World!" hintStyle={{color: orange500}} />
           )}
+        <Dialog
+          title="Congratulations~"
+          actions={actions}
+          modal={false}
+          open={this.state.dialogActived}
+          onRequestClose={this._onDialogClose}
+        >
+          Match success!!!
+        </Dialog>
       </div>
       )
   }
