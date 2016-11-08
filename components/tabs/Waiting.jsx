@@ -8,6 +8,12 @@ export default class Login extends React.Component {
     authpassed: false,
     eventActived: false
   }
+  resetState = () => {
+    this.setState({
+      authpassed: false,
+      eventActived: false
+    })
+  }
   componentDidMount = () => {
     this.checkCookie()
   }
@@ -16,11 +22,6 @@ export default class Login extends React.Component {
       authpassed: true
     })
     this.checkEvent()
-  }
-  onResetAuth = () => {
-    this.setState({
-      authpassed: false
-    })
   }
   checkEvent = () => {
     let src = `http://${apiHost}/event/hello`
@@ -71,7 +72,7 @@ export default class Login extends React.Component {
     req.onreadystatechange = () => {
       if(req.readyState == 4 && req.status == 200){
         console.log('logout')
-        this.onResetAuth()
+        this.resetState()
       }
     }
     req.open('POST', src)
