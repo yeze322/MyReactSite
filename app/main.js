@@ -8,8 +8,9 @@ import './main.css'
 
 import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
 
-import Mytab from '../components/common/Mytab.jsx'
-import { WorkRecord, Material, Voters, ApiDoc, Waiting, TabUrlMap } from '../components/tabs'
+import { Mytab } from '../components/views'
+import { WorkRecord, Material, Voters, ApiDoc, Waiting } from '../components/tabs'
+import { TabUrlMap } from '../components/common'
 
 ReactDOM.render(
   <MuiThemeProvider>

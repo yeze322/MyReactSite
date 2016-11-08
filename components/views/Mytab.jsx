@@ -1,7 +1,7 @@
 import React from 'react'
 import { browserHistory } from 'react-router'
-import {Tabs, Tab} from 'material-ui/Tabs'
-import { TabUrlMap } from '../tabs'
+import { Tabs, Tab } from 'material-ui/Tabs'
+import { TabUrlMap } from '../common'
 
 const styles = {
   headline: {

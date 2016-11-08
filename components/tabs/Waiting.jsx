@@ -1,13 +1,12 @@
 import React from 'react';
 import LoginForm from './Waiting/LoginForm.jsx'
 import MainPage from './Waiting/MainPage.jsx'
-
-//var apiHost = "localhost:8080"
-var apiHost = "yeze.eastasia.cloudapp.azure.com:8080"
+import { apiHost } from '../common'
 
 export default class Login extends React.Component {
   state = {
-    authpassed: false
+    authpassed: false,
+    eventActived: false
   }
   componentDidMount = () => {
     this.checkCookie()
@@ -16,11 +15,24 @@ export default class Login extends React.Component {
     this.setState({
       authpassed: true
     })
+    this.checkEvent()
   }
   onResetAuth = () => {
     this.setState({
       authpassed: false
     })
+  }
+  checkEvent = () => {
+    let src = `http://${apiHost}/event/hello`
+    let req = new XMLHttpRequest()
+    req.open('GET', src, false)
+    req.withCredentials = true
+    req.send(null)
+    if(req.readyState == 4 && req.status == 200){
+      this.setState({
+        eventActived: true
+      })
+    }
   }
   checkCookie = () => {
     // make synchronous request
@@ -66,12 +78,17 @@ export default class Login extends React.Component {
     req.withCredentials = true
     req.send(null)
   }
+  _revertEventState = () => {
+    this.setState((prevState, props) => ({
+      eventActived: !prevState.eventActived
+    }))
+  }
   render() {
     const { authpassed } = this.state
     if(!authpassed){
       return <LoginForm authpassed={authpassed} onPassAuth={this.onPassAuth} onLogin={this.onLogin} />
     }else{
-      return <MainPage onLogout={this.onLogout} />
+      return <MainPage onLogout={this.onLogout} eventActived={this.state.eventActived} revertEvent={this._revertEventState} />
     }
   }
 }
