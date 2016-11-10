@@ -1,7 +1,8 @@
 import React from 'react'
 import { LinearProgress, RaisedButton, TextField } from 'material-ui'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table'
-
+import StarIcon from 'material-ui/svg-icons/toggle/star'
+import LanguageIcon from 'material-ui/svg-icons/action/trending-flat'
 import {List, ListItem} from 'material-ui/List'
 import ActionInfo from 'material-ui/svg-icons/action/info';
 import ActionAssignment from 'material-ui/svg-icons/action/assignment';
@@ -15,6 +16,7 @@ export default class ApiDoc extends React.Component {
   state = {
     userJson: '[]',
     repoJson: '[]',
+    starredJson: '[]',
     userName: 'yeze322',
     repoName: 'MyNodeApi',
     currentDataSoure: ''
@@ -31,6 +33,20 @@ export default class ApiDoc extends React.Component {
       }
     }
     req.open('GET', `https://api.github.com/repos/${this.state.userName}/${this.state.repoName}`)
+    req.send(null)
+  }
+
+  _fetchStarredAsync = () => {
+    var req = new XMLHttpRequest()
+    req.onreadystatechange = () => {
+      if(req.readyState == 4 && req.status == 200){
+        this.setState({
+          starredJson: req.responseText,
+          currentDataSoure: 'starred'
+        })
+      }
+    }
+    req.open('GET', `https://api.github.com/users/${this.state.userName}/starred?page=1&per_page=20`)
     req.send(null)
   }
 
@@ -66,14 +82,8 @@ export default class ApiDoc extends React.Component {
 
   render() {
     let link = this._generateGitLink()
-    let userRepos = JSON.parse(this.state.userJson).map((obj)=>{
-      return {
-        id: obj.id,
-        name: obj.name,
-        full_name: obj.full_name,
-        url: obj.clone_url
-      }
-    })
+    let userRepos = JSON.parse(this.state.userJson)
+    let userStarred = JSON.parse(this.state.starredJson)
     let repoData = JSON.parse(this.state.repoJson)
     return (
       <div>
@@ -85,6 +95,7 @@ export default class ApiDoc extends React.Component {
             onChange={this._onInputUser}
           />
           <RaisedButton label="Fetch User" secondary={true} onClick={this._fetchUserAsync} />
+          <RaisedButton label="Starred Repos" primary={true} onClick={this._fetchStarredAsync} icon={<StarIcon />} />
           <br />
           <TextField
             hintText="Github Repo Name"
@@ -98,6 +109,28 @@ export default class ApiDoc extends React.Component {
           <h1>Visit</h1>
           <a href={link} target='_blank'>{link}</a>
         </div>
+        { this.state.starredJson !== '[]' &&
+          <Table selectable={false}>
+            <TableHeader displaySelectAll={false}>
+              <TableRow>
+                <TableHeaderColumn>Name</TableHeaderColumn>
+                <TableHeaderColumn>Full Name</TableHeaderColumn>
+                <TableHeaderColumn>Description</TableHeaderColumn>
+                <TableHeaderColumn>Url</TableHeaderColumn>
+              </TableRow>
+            </TableHeader>
+            <TableBody displayRowCheckbox={false}>
+              {userStarred.map((row, index) => (
+                  <TableRow key={index}>
+                    <TableRowColumn><StarIcon />{row.watchers}<LanguageIcon />{row.language}</TableRowColumn>
+                    <TableRowColumn>{row.full_name}</TableRowColumn>
+                    <TableRowColumn>{row.description}</TableRowColumn>
+                    <TableRowColumn><a href={row.clone_url} target='_about'>Github</a></TableRowColumn>
+                  </TableRow>
+                  ))}
+            </TableBody>
+          </Table>
+        }
         <div>
         { this.state.repoJson !== '[]' &&
           <List>
@@ -131,12 +164,12 @@ export default class ApiDoc extends React.Component {
               </TableRow>
             </TableHeader>
             <TableBody displayRowCheckbox={false}>
-              {userRepos.map( (row, index) => (
+              {userRepos.map((row, index) => (
                   <TableRow key={index}>
                     <TableRowColumn>{row.id}</TableRowColumn>
                     <TableRowColumn>{row.name}</TableRowColumn>
                     <TableRowColumn>{row.full_name}</TableRowColumn>
-                    <TableRowColumn><a href={row.url} target='_about'>Github</a></TableRowColumn>
+                    <TableRowColumn><a href={row.clone_url} target='_about'>Github</a></TableRowColumn>
                   </TableRow>
                   ))}
             </TableBody>
