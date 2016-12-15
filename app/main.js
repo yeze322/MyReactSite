@@ -14,9 +14,9 @@ const rootRoute = {
   childRoutes: [{
     path: '/',
     component: Mytab,
-    onEnter: (route, replaceState) => {
+    onEnter: (route, replace) => {
       if (route.location.pathname === '/') {
-        replaceState(null, '/Waiting')
+        replace(null, '/Waiting')
       }
     },
     childRoutes: [
