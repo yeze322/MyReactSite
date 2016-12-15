@@ -5,7 +5,8 @@ var HTMLWebPlugin = require('html-webpack-plugin')
 var config = {
   entry: {
     bundle: path.resolve(__dirname, 'app/main.js'),
-    vendor: ['material-ui', 'react', 'react-router']
+    vendor: ['material-ui'],
+    common: ['react', 'react-router']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -29,7 +30,11 @@ var config = {
     }]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
+    new webpack.optimize.CommonsChunkPlugin({
+      names: ['vendor', 'common'],
+      filename: '[name].js',
+      minChunks: Infinity
+    }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
