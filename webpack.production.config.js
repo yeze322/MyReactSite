@@ -3,7 +3,8 @@ var path = require('path');
 
 var config = {
   entry: {
-    bundle: path.resolve(__dirname, 'app/main.js')
+    bundle: path.resolve(__dirname, 'app/main.js'),
+    vendor: ['material-ui', 'react', 'react-router']
   },
   output: {
     path: path.resolve(__dirname, 'build'),
@@ -27,7 +28,7 @@ var config = {
     }]
   },
   plugins: [
-    new webpack.optimize.CommonsChunkPlugin('bundle', 'bundle.js'),
+    new webpack.optimize.CommonsChunkPlugin('vendor', 'vendor.js', Infinity),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -41,10 +42,3 @@ var config = {
 };
 
 module.exports = config;
-var fs = require('fs')
-webpack(config, (err, stats) => {
-  console.log('err: ', err)
-  var t = new Date().getTime()
-  fs.writeFileSync(`./stats_deploy_${t}.json`, JSON.stringify(stats.toJson()))
-  console.log('DONEEEEEEEEEEEEEEEEEEEEEEEEEE')
-})
