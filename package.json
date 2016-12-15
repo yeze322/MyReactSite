@@ -6,7 +6,7 @@
   "scripts": {
     "build": "./node_modules/.bin/webpack",
     "dev": "webpack-dev-server --host 0.0.0.0 --port 3222 --devtool eval --progress --colors --hot --history-api-fallback",
-    "deploy": "rimraf build && set NODE_ENV=production && webpack -p --config webpack.production.config.js"
+    "deploy": "rimraf build && set NODE_ENV=production && webpack -p --display-chunks --display-reason --display-modules --config webpack.production.config.js"
   },
   "author": "",
   "license": "ISC",
@@ -20,8 +20,6 @@
     "react-tap-event-plugin": "^1.0.0"
   },
   "devDependencies": {
-    "webpack": "^1.13.2",
-    "webpack-dev-server": "^1.15.0",
     "babel-cli": "^6.14.0",
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",
@@ -30,7 +28,10 @@
     "babel-preset-stage-2": "^6.13.0",
     "css-loader": "^0.24.0",
     "file-loader": "^0.9.0",
+    "html-webpack-plugin": "^2.24.1",
     "image-webpack-loader": "^2.0.0",
-    "style-loader": "^0.13.1"
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
   }
 }

@@ -1,5 +1,6 @@
 var webpack = require('webpack');
 var path = require('path');
+var HTMLWebPlugin = require('html-webpack-plugin')
 
 var config = {
   entry: {
@@ -37,6 +38,10 @@ var config = {
         dead_code: true,
         warnings: false
       }
+    }),
+    new HTMLWebPlugin({
+      template: path.resolve(__dirname, 'index.html'),
+      favicon: path.resolve(__dirname, 'favicon.ico')
     })
   ]
 };
