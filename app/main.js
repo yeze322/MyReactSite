@@ -9,21 +9,29 @@ import './main.css'
 import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
 
 import { Mytab } from '../components/views'
-import { WorkRecord, Material, Voters, ApiDoc, Waiting } from '../components/tabs'
-import { TabUrlMap } from '../components/common'
+
+const rootRoute = {
+  childRoutes: [{
+    path: '/',
+    component: Mytab,
+    onEnter: (route, replaceState) => {
+      if (route.location.pathname === '/') {
+        replaceState(null, '/Waiting')
+      }
+    },
+    childRoutes: [
+      require('../components/tabs/ApiDoc'),
+      require('../components/tabs/Material'),
+      require('../components/tabs/Voters'),
+      require('../components/tabs/Waiting'),
+      require('../components/tabs/WorkRecord')
+    ]
+  }]
+}
 
 ReactDOM.render(
   <MuiThemeProvider>
-    <Router history={browserHistory}>
-      <Route path='/' component={Mytab}>
-        <IndexRedirect to={TabUrlMap.WaitingForYou} />
-        <Route path={TabUrlMap.WorkRecord} component={WorkRecord} />
-        <Route path={TabUrlMap.Material} component={Material} />
-        <Route path={TabUrlMap.Voters} component={Voters} />
-        <Route path={TabUrlMap.ApiDoc} component={ApiDoc} />
-        <Route path={TabUrlMap.WaitingForYou} component={Waiting} />
-      </Route>
-    </Router>
+    <Router history={browserHistory} routes={rootRoute} />
   </MuiThemeProvider>,
   document.getElementById('mytab')
 );
