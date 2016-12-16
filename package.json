@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./node_modules/.bin/webpack",
-    "dev": "webpack-dev-server --host 0.0.0.0 --port 3222 --devtool eval --progress --colors --hot --history-api-fallback --config webpack.config.js",
+    "dev": "webpack-dev-server --host 0.0.0.0 --port 3222 --devtool eval --progress --colors --hot --history-api-fallback --config webpack.config.js --compress",
     "deploy": "rimraf build && set NODE_ENV=production && webpack -p --display-chunks --display-reason --display-modules --config webpack.production.config.js"
   },
   "author": "",
