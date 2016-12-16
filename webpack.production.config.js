@@ -10,7 +10,8 @@ var config = {
   },
   output: {
     path: path.resolve(__dirname, 'build'),
-    filename: '[name].js'
+    filename: '[name].js',
+    chunckFilename: '[id].chunk.js'
   },
   module: {
     loaders: [{
@@ -34,7 +35,7 @@ var config = {
       names: ['vendor', 'common'],
       filename: '[name].js',
       minChunks: Infinity
-    }),
+    }), // got same output if remove this plugin
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({
@@ -45,7 +46,8 @@ var config = {
       }
     }),
     new HTMLWebPlugin({
-      template: path.resolve(__dirname, 'index.html'),
+      template: path.resolve(__dirname, 'template.html'),
+      filename: 'index.html',
       favicon: path.resolve(__dirname, 'favicon.ico')
     })
   ]
