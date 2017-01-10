@@ -1,7 +1,7 @@
 import React from 'react';
 import LoginForm from './LoginForm.jsx'
 import MainPage from './MainPage.jsx'
-import { apiHost } from '../../common'
+import { apiHost } from '~/common'
 
 export default class Login extends React.Component {
   state = {

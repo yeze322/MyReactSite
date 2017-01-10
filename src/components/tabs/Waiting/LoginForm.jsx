@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router'
 import './Login.css';
-import myAvater from './avatar.jpg'
+import myAvater from '~/static/avatar.jpg'
 import { TextField } from 'material-ui'
 
 export default class LoginForm extends React.Component {

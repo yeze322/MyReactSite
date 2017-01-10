@@ -1,7 +1,7 @@
 import React from 'react'
 import { RaisedButton, Toggle, TextField, Dialog } from 'material-ui'
 import { orange500 } from 'material-ui/styles/colors'
-import { apiHost } from '../../common'
+import { apiHost } from '~/common'
 import './MainPage.css'
 
 export default class MainPage extends React.Component {

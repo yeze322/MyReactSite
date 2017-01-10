@@ -5,7 +5,7 @@ var config = {
   entry: [
       'webpack/hot/dev-server',
       'webpack-dev-server/client?http://0.0.0.0:3222',
-      path.resolve(__dirname, 'app/main.js')
+      path.resolve(__dirname, 'src/app/main.js')
   ],
   output: {
     path: path.resolve(__dirname, 'build'),
