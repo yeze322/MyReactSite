@@ -8,7 +8,7 @@ import './main.css'
 
 import { Router, Route, browserHistory, IndexRedirect } from 'react-router'
 
-import { Mytab } from '~/components/views'
+import { Mytab } from '~/components'
 
 const rootRoute = {
   childRoutes: [{
@@ -20,11 +20,11 @@ const rootRoute = {
       }
     },
     childRoutes: [
-      require('~/components/tabs/ApiDoc'),
-      require('~/components/tabs/Material'),
-      require('~/components/tabs/Voters'),
-      require('~/components/tabs/Waiting'),
-      require('~/components/tabs/WorkRecord')
+      require('~/containers/ApiDoc'),
+      require('~/containers/Material'),
+      require('~/containers/Voters'),
+      require('~/containers/Waiting'),
+      require('~/containers/WorkRecord')
     ]
   }]
 }
