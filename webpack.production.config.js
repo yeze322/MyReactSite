@@ -4,7 +4,7 @@ var HTMLWebPlugin = require('html-webpack-plugin')
 
 var config = {
   entry: {
-    bundle: path.resolve(__dirname, 'app/main.js'),
+    bundle: path.resolve(__dirname, 'src/app/main.js'),
     vendor: ['material-ui']
   },
   output: {
