@@ -51,7 +51,7 @@ export default class Login extends React.Component {
   }
   onLogin = (username, password) => {
     return () => {
-      let src = `http://${apiHost}/login?name=${username}&pswd=${password}`
+      let src = `http://${apiHost}/login`
       let req = new XMLHttpRequest()
       req.onreadystatechange = () => {
         if(req.readyState == 4 && req.status == 200){
@@ -61,9 +61,9 @@ export default class Login extends React.Component {
           }
         }
       }
-      req.open('GET', src)
+      req.open('POST', src)
       req.withCredentials = true
-      req.send(null)
+      req.send(JSON.stringify({ username, password }))
     }
   }
   onLogout = () => {
