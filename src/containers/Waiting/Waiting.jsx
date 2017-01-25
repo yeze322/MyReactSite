@@ -39,7 +39,7 @@ export default class Login extends React.Component {
     // make synchronous request
     let src = `http://${apiHost}/login`
     let req = new XMLHttpRequest()
-    req.open('GET', src, false)
+    req.open('POST', src, false)
     req.withCredentials = true
     req.send(null)
     if(req.readyState == 4 && req.status == 200){
