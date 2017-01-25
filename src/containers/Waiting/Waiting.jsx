@@ -62,6 +62,7 @@ export default class Login extends React.Component {
         }
       }
       req.open('POST', src)
+      req.setRequestHeader('Content-type', 'application/json')
       req.withCredentials = true
       req.send(JSON.stringify({ username, password }))
     }
